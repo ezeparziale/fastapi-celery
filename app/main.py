@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-app = FastAPI()
 
 
 from .worker import celery_app, create_task
+from config import settings
+
+
+# FastAPI
+app = FastAPI(
+    title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
+)
 
 
 @app.get("/")

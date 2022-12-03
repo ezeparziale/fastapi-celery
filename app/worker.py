@@ -1,9 +1,10 @@
 import time
 
 from celery import Celery
+from config import settings
 
 celery_app = Celery(
-    __name__, backend="redis://localhost:6379", broker="redis://localhost:6379"
+    __name__, backend=settings.CELERY_RESULT_BACKEND, broker=settings.CELERY_BROKER_URL
 )
 
 
