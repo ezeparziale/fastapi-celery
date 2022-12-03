@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-
-
-from .worker import celery_app, create_task
 from config import settings
 
+from .worker import celery_app, create_task
 
 # FastAPI
 app = FastAPI(
