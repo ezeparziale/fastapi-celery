@@ -1,4 +1,4 @@
-# API with Fastapi and celery
+# :octopus: API with Fastapi and celery
 
 Simple api with Fastapi using celery.
 
