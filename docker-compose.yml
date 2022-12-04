@@ -6,6 +6,8 @@ services:
     image: redis:7.0.5
     ports:
       - 6379:6379
+    networks:
+      - fastapi_demo_net
 
   app:
     container_name: app_api
@@ -16,6 +18,8 @@ services:
     ports:
       - 8000:8000
     restart: always
+    networks:
+      - fastapi_demo_net
     depends_on:
       - redis-db
 
@@ -26,6 +30,8 @@ services:
     environment:
       - CELERY_BROKER_URL=${CELERY_BROKER_URL}
       - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    networks:
+      - fastapi_demo_net
     depends_on:
       - app
 
@@ -38,6 +44,14 @@ services:
     environment:
       - CELERY_BROKER_URL=${CELERY_BROKER_URL}
       - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    networks:
+      - fastapi_demo_net
     depends_on:
       - redis-db
       - celery-worker-1
+
+
+networks:
+  fastapi_demo_net:
+    name: fastapi_demo_net
+
