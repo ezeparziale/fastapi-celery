@@ -26,7 +26,19 @@ services:
   celery-worker-1:
     container_name: celery-worker-1
     build: .
-    command: celery -A app.worker worker -l info -P threads --uid=nobody --gid=nogroup
+    command: celery -A app.worker worker -l info -P threads --uid=nobody --gid=nogroup -n celery-worker-1@%%h
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    networks:
+      - fastapi_demo_net
+    depends_on:
+      - app
+
+  celery-worker-2:
+    container_name: celery-worker-2
+    build: .
+    command: celery -A app.worker worker -l info -P threads --uid=nobody --gid=nogroup -n celery-worker-2@%%h
     environment:
       - CELERY_BROKER_URL=${CELERY_BROKER_URL}
       - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
