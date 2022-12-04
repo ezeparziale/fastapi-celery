@@ -40,20 +40,8 @@ docker compose -f "docker-compose.yml" up -d --build
 
 ## :runner: Run
 
-Fastapi:
+Run `docker-compose.yml` with:
 
 ```bash
-uvicorn app.main:app --reload --port 8000
-```
-
-Celery:
-
-```bash
-celery -A app.worker worker -l info -P threads
-```
-
-Flower:
-
-```bash
-celery -A app.worker flower  -l info
+docker compose -f "docker-compose.yml" up -d --build
 ```
