@@ -1,3 +1,4 @@
 fastapi==0.88.0
 uvicorn[standard]==0.20.0
 celery[redis]==5.2.7
+flower==1.2.0
