@@ -2,7 +2,42 @@ version: "3.9"
 services:
 
   redis-db:
-    image: redis
     container_name: redis-db
+    image: redis:7.0.5
     ports:
       - 6379:6379
+
+  app:
+    container_name: app_api
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    restart: always
+    depends_on:
+      - redis-db
+
+  celery-worker-1:
+    container_name: celery-worker-1
+    build: .
+    command: celery -A app.worker worker -l info -P threads --uid=nobody --gid=nogroup
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    depends_on:
+      - app
+
+  flower:
+    container_name: flower
+    build: .
+    command: celery -A app.worker flower -l info -P threads
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    depends_on:
+      - redis-db
+      - celery-worker-1
