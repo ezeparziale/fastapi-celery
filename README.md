@@ -49,11 +49,11 @@ uvicorn app.main:app --reload --port 8000
 Celery:
 
 ```bash
-celery -A app.worker  worker -l info -P threads
+celery -A app.worker worker -l info -P threads
 ```
 
 Flower:
 
 ```bash
-celery -A app.worker  flower  -l info
+celery -A app.worker flower  -l info
 ```
