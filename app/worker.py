@@ -1,13 +1,8 @@
 import time
 
-from celery import Celery
 from celery.contrib.abortable import AbortableTask
 
-from app.core.config import settings
-
-celery_app = Celery(
-    __name__, backend=settings.CELERY_RESULT_BACKEND, broker=settings.CELERY_BROKER_URL
-)
+from app.core.celery_app import celery_app
 
 
 @celery_app.task(name="create_new_task", base=AbortableTask)
