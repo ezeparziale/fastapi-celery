@@ -4,7 +4,7 @@ from pydantic import BaseSettings
 class Settings(BaseSettings):
     # FastAPI
     API_V1_STR: str = "/api/v1"
-    PROJECT_NAME: str = "FastAPI Google Auth Login"
+    PROJECT_NAME: str = "FastAPI + Celery"
 
     # Redis
     CELERY_BROKER_URL: str = "redis://localhost:6379/0"
